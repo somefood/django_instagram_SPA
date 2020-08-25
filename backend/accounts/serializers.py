@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class SignupSeriallizer(serializers.ModelSerializer):
+class SignupSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
 
     def create(self, validated_data):
@@ -15,3 +15,9 @@ class SignupSeriallizer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['pk', 'username', 'password']
+
+
+class SuggestionUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "name", "avatar_url"]
