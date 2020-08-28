@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Card, Form, Input, Button, notification } from "antd";
 import { SmileOutlined, FrownOutlined } from "@ant-design/icons";
-import { useHistory, useLocation  } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import Axios from "axios";
 import useLocalStorage from "utils/useLocalStorage";
+import { parseErrorMessages } from "utils/forms";
 import { useAppContext } from "store";
 import { setToken } from "store";
 
@@ -52,19 +53,7 @@ export default function Login() {
           });
           const { data: fieldsErrorMessages } = error.response;
           // python: mydict.items()
-          setFieldErrors(
-            Object.entries(fieldsErrorMessages).reduce(
-              (acc, [fieldName, errors]) => {
-                /// errors : ["m1", "m2"].join(" ") => "m1 m2"
-                acc[fieldName] = {
-                  validateStatus: "error",
-                  help: errors.join(" "),
-                };
-                return acc;
-              },
-              {}
-            )
-          );
+          setFieldErrors(parseErrorMessages(fieldsErrorMessages));
         }
       }
     }

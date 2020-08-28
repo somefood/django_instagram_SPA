@@ -22,3 +22,10 @@ class PostViewSet(ModelViewSet):
         )
         # qs = qs.filter(crated_at__gte=timesince)
         return qs
+
+    def perform_create(self, serializer):
+        # post = from.save(commit=False)
+        # post.author = self.request.user
+        # post.save()
+        serializer.save(author=self.request.user)
+        return super().perform_create(serializer)
